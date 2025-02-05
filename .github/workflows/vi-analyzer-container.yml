@@ -1,0 +1,22 @@
+name: VI Analyzer Tests
+
+# Trigger when a pull request is opened or updated that changes any .vi file.
+on:
+  pull_request:
+    paths:
+      - '**/*.vi'
+
+jobs:
+  run-vi-analyzer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Pull Docker Image from GHCR
+        run: docker pull ghcr.io/shivacode-2/lv2025linux:latest
+      - name: Run VI Analyzer Tests
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/workspace" \
+            ghcr.io/shivacode-2/lv2025linux:latest \
+            bash -c "/workspace/scripts/run_vi_analyzer.sh"
