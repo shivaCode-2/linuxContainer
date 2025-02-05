@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e  # Exit immediately if a command exits with a non-zero status
 
 # Verify that the configuration file exists.
 CONFIG_FILE='/workspace/Test-VIs/VIAnalyzerCfgFile.viancfg'
@@ -24,6 +23,9 @@ LabVIEWCLI -LogToConsole true \
 -LabVIEWPath $LABVIEW_PATH"
 
 echo "Done running of VI Analyzer Tests"
+
+echo "Printing Report..."
+cat $REPORT_PATH
 
 RESULT=$?
 
