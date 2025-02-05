@@ -1,6 +1,5 @@
 name: VI Analyzer Tests
 
-# Trigger when a pull request is opened or updated that changes any .vi file.
 on:
   pull_request:
     paths:
@@ -12,8 +11,18 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+
+      # Authenticate to GitHub Container Registry
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_PAT }}
+
       - name: Pull Docker Image from GHCR
         run: docker pull ghcr.io/shivacode-2/lv2025linux:latest
+
       - name: Run VI Analyzer Tests
         run: |
           docker run --rm \
