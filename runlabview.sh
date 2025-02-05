@@ -27,14 +27,16 @@ echo "Done running of VI Analyzer Tests"
 echo "Printing Report..."
 cat $REPORT_PATH
 
-FAILED_COUNT=$(awk '/Failed Tests/ {
-  for(i=1;i<=NF;i++) {
-    if ($i ~ /^[0-9]+$/) {
-      print $i; exit
-    }
-  }
-}' "$REPORT_FILE")
-echo "Number of failed tests: $FAILED_COUNT"
+echo "Debug: Lines with 'Failed Tests':"
+grep "Failed Tests" "$REPORT_FILE" || echo "No matching lines found."
+
+# Use grep to extract the first occurrence of a number on a line that contains "Failed Tests"
+DEBUG_LINE=$(grep -E "Failed Tests[[:space:]]+[0-9]+" "$REPORT_FILE" | head -n1)
+echo "Debug: Matched line: '$DEBUG_LINE'"
+
+# Now extract the number from that line using grep -Eo which finds only the digits
+FAILED_COUNT=$(echo "$DEBUG_LINE" | grep -Eo '[0-9]+')
+echo "Number of failed tests (extracted): '$FAILED_COUNT'"
 
 # Check if the failed tests count is 0.
 if [ "$FAILED_COUNT" -eq 0 ]; then
