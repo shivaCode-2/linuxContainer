@@ -15,7 +15,7 @@ echo "  ReportPath: $REPORT_PATH"
 echo "  LabVIEWPath: $LABVIEW_PATH"
 
 # Run the LabVIEWCLI command.
-OUTPUT = $(xvfb-run -a -s "-screen 0 1024x768x24" bash -c "\
+OUTPUT=$(xvfb-run -a -s "-screen 0 1024x768x24" bash -c "\
 LabVIEWCLI -LogToConsole true \
 -OperationName RunVIAnalyzer \
 -ConfigPath $CONFIG_FILE \
