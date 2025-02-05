@@ -2,7 +2,7 @@
 set -e  # Exit immediately if a command exits with a non-zero status
 
 # Verify that the configuration file exists.
-CONFIG_FILE='/workspace/Test \VIs/VIAnalyzerCfgFile.viancfg'
+CONFIG_FILE='/workspace/Test-VIs/VIAnalyzerCfgFile.viancfg'
 LABVIEW_PATH='/usr/local/natinst/LabVIEW-2025-64/labviewprofull'
 REPORT_PATH='/usr/local/natinst/ContainerExamples/Results.txt'
 if [ ! -f "$CONFIG_FILE" ]; then
