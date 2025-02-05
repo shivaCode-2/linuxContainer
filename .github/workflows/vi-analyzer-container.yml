@@ -28,4 +28,8 @@ jobs:
           docker run --rm \
             -v "${{ github.workspace }}:/workspace" \
             ghcr.io/shivacode-2/lv2025linux:latest \
-            bash -c "/workspace/scripts/run_vi_analyzer.sh"
+            bash -c "echo 'Running LabVIEWCLI to build specification...Helloooooo' && \
+                    LabVIEWCLI -LogToConsole true -OperationName RunVIAnalyzer \
+                    -ConfigPath '/workspace/Test VIs/VIAnalyzerCfgFile.viancfg' \
+                    -ReportPath '/usr/local/natinst/ContainerExamples/Results.txt' \
+                    -LabVIEWPath '/usr/local/natinst/LabVIEW-2025-64/labviewprofull'"
