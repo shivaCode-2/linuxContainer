@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e  # Exit immediately if any command fails.
 
 # Verify that the configuration file exists.
 CONFIG_FILE='/workspace/Test-VIs/VIAnalyzerCfgFile.viancfg'
@@ -27,12 +28,15 @@ echo "Done running of VI Analyzer Tests"
 echo "Printing Report..."
 cat $REPORT_PATH
 
-RESULT=$?
+FAILED_COUNT=$(awk '/^Failed Tests/ {print $NF}' "$REPORT_FILE")
 
-if [ $RESULT -eq 0 ]; then
-  echo "LabVIEWCLI completed successfully."
+echo "Number of failed tests: $FAILED_COUNT"
+
+# Check if the failed tests count is 0.
+if [ "$FAILED_COUNT" -eq 0 ]; then
+  echo "All tests passed."
+  exit 0
 else
-  echo "LabVIEWCLI failed with exit code $RESULT"
+  echo "Some tests failed. Exiting with error."
+  exit 1
 fi
-
-exit $RESULT
