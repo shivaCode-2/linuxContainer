@@ -26,10 +26,7 @@ jobs:
       - name: Run VI Analyzer Tests
         run: |
           docker run --rm \
-            -v "${{ github.workspace }}:/workspace" \
-            ghcr.io/shivacode-2/lv2025linux:latest \
-            bash -c "xvfb-run -a -s "-screen 0 1024x768x24" \
-                    LabVIEWCLI -LogToConsole true -OperationName RunVIAnalyzer \
-                    -ConfigPath '/workspace/Test VIs/VIAnalyzerCfgFile.viancfg' \
-                    -ReportPath '/usr/local/natinst/ContainerExamples/Results.txt' \
-                    -LabVIEWPath '/usr/local/natinst/LabVIEW-2025-64/labviewprofull'"
+          -v "${{ github.workspace }}:/workspace" \
+          ghcr.io/shivacode-2/lv2025linux:latest \
+          bash -c "xvfb-run -a -s \"-screen 0 1024x768x24\" LabVIEWCLI -LogToConsole true -OperationName RunVIAnalyzer -ConfigPath '/workspace/Test VIs/VIAnalyzerCfgFile.viancfg' -ReportPath '/usr/local/natinst/ContainerExamples/Results.txt' -LabVIEWPath '/usr/local/natinst/LabVIEW-2025-64/labviewprofull'"
+
