@@ -28,6 +28,8 @@ echo "$OUTPUT"
 FAILED_COUNT=$(echo "$OUTPUT" | grep -i "tests failed" | grep -Eo '[0-9]+' | head -n 1)
 
 echo "Number of failed tests: $FAILED_COUNT"
+echo "Print Report..."
+cat $REPORT_PATH
 
 # Exit with success (0) if no tests failed, else exit with error (1).
 if [ "$FAILED_COUNT" -eq 0 ]; then
