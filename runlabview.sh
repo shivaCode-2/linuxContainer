@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e  # Exit immediately if any command fails.
 
 # Verify that the configuration file exists.
 CONFIG_FILE='/workspace/Test-VIs/VIAnalyzerCfgFile.viancfg'
