@@ -27,8 +27,7 @@ echo "Done running of VI Analyzer Tests"
 echo "Printing Report..."
 cat $REPORT_PATH
 
-FAILED_COUNT=$(awk '/^Failed Tests/ {print $NF}' "$REPORT_FILE")
-
+FAILED_COUNT=$(grep -E "^[[:space:]]*Failed Tests[[:space:]]+[0-9]+" "$REPORT_FILE" | head -n1 | sed -E 's/.*[[:space:]]+([0-9]+)$/\1/')
 echo "Number of failed tests: $FAILED_COUNT"
 
 # Check if the failed tests count is 0.
