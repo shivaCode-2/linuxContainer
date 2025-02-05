@@ -15,30 +15,21 @@ echo "  ReportPath: $REPORT_PATH"
 echo "  LabVIEWPath: $LABVIEW_PATH"
 
 # Run the LabVIEWCLI command.
-xvfb-run -a -s "-screen 0 1024x768x24" bash -c "\
+OUTPUT = $(xvfb-run -a -s "-screen 0 1024x768x24" bash -c "\
 LabVIEWCLI -LogToConsole true \
 -OperationName RunVIAnalyzer \
 -ConfigPath $CONFIG_FILE \
 -ReportPath $REPORT_PATH \
--LabVIEWPath $LABVIEW_PATH"
+-LabVIEWPath $LABVIEW_PATH")
 
 echo "Done running of VI Analyzer Tests"
+echo "LabVIEWCLI Output:"
+echo "$OUTPUT"
+FAILED_COUNT=$(echo "$OUTPUT" | grep -i "tests failed" | grep -Eo '[0-9]+' | head -n 1)
 
-echo "Printing Report..."
-cat $REPORT_PATH
+echo "Number of failed tests: $FAILED_COUNT"
 
-echo "Debug: Lines with 'Failed Tests':"
-grep "Failed Tests" "$REPORT_FILE" || echo "No matching lines found."
-
-# Use grep to extract the first occurrence of a number on a line that contains "Failed Tests"
-DEBUG_LINE=$(grep -E "Failed Tests[[:space:]]+[0-9]+" "$REPORT_FILE" | head -n1)
-echo "Debug: Matched line: '$DEBUG_LINE'"
-
-# Now extract the number from that line using grep -Eo which finds only the digits
-FAILED_COUNT=$(echo "$DEBUG_LINE" | grep -Eo '[0-9]+')
-echo "Number of failed tests (extracted): '$FAILED_COUNT'"
-
-# Check if the failed tests count is 0.
+# Exit with success (0) if no tests failed, else exit with error (1).
 if [ "$FAILED_COUNT" -eq 0 ]; then
   echo "All tests passed."
   exit 0
