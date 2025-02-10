@@ -9,7 +9,7 @@ if [ ! -f "$CONFIG_FILE" ]; then
   exit 1
 fi
 
-echo "Running LabVIEWCLI with the following parameters:"
+echo "(Debug) Running LabVIEWCLI with the following parameters:"
 echo "  ConfigPath: $CONFIG_FILE"
 echo "  ReportPath: $REPORT_PATH"
 echo "  LabVIEWPath: $LABVIEW_PATH"
