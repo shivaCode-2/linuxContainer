@@ -2,8 +2,10 @@ name: VI Analyzer Tests
 
 on:
   pull_request:
-    paths:
-      - '**/*.vi'
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   run-vi-analyzer:
