@@ -1,4 +1,4 @@
-#!/bin/bash
+o#!/bin/bash
 
 # Verify that the configuration file exists.
 CONFIG_FILE='/workspace/Test-VIs/viaPassCase.viancfg'
@@ -10,9 +10,11 @@ if [ ! -f "$CONFIG_FILE" ]; then
 fi
 
 echo "(Debug) Running LabVIEWCLI with the following parameters:"
-echo "  ConfigPath: $CONFIG_FILE"
-echo "  ReportPath: $REPORT_PATH"
-echo "  LabVIEWPath: $LABVIEW_PATH"
+echo "(Debug) ConfigPath: $CONFIG_FILE"
+echo "(Debug) ReportPath: $REPORT_PATH"
+echo "(Debug) LabVIEWPath: $LABVIEW_PATH"
+
+echo "Running LabVIEWCLI without explicitly running XVFB"
 
 # Run the LabVIEWCLI command.
 OUTPUT=$(LabVIEWCLI -LogToConsole true \
