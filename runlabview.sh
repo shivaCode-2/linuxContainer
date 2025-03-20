@@ -1,4 +1,4 @@
-o#!/bin/bash
+#!/bin/bash
 
 # Verify that the configuration file exists.
 CONFIG_FILE='/workspace/Test-VIs/viaPassCase.viancfg'
