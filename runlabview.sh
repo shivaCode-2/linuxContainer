@@ -15,11 +15,11 @@ echo "  ReportPath: $REPORT_PATH"
 echo "  LabVIEWPath: $LABVIEW_PATH"
 
 # Run the LabVIEWCLI command.
-OUTPUT=LabVIEWCLI -LogToConsole true \
+OUTPUT=$(LabVIEWCLI -LogToConsole true \
                   -OperationName RunVIAnalyzer \
                   -ConfigPath $CONFIG_FILE \
                   -ReportPath $REPORT_PATH \
-                  -LabVIEWPath $LABVIEW_PATH"
+                  -LabVIEWPath $LABVIEW_PATH)
 
 echo "Done running of VI Analyzer Tests"
 echo "LabVIEWCLI Output:"
