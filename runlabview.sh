@@ -9,6 +9,13 @@ if [ ! -f "$CONFIG_FILE" ]; then
   exit 1
 fi
 
+CICDSwitch=$(echo $EnableCICDFeaturesForLabVIEW)
+if [ "$CICDSwitch" == "TRUE" ]
+  echo "CI/CD Features are enabled"
+else
+  echo "Warning! CI/CD Features are not available for LabVIEW"
+fi
+
 echo "(Debug) Running LabVIEWCLI with the following parameters:"
 echo "(Debug) ConfigPath: $CONFIG_FILE"
 echo "(Debug) ReportPath: $REPORT_PATH"
