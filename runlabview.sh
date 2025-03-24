@@ -10,7 +10,7 @@ if [ ! -f "$CONFIG_FILE" ]; then
 fi
 
 CICDSwitch=$(echo $EnableCICDFeaturesForLabVIEW)
-if [ "$CICDSwitch" == "TRUE" ]
+if [ "$CICDSwitch" == "TRUE" ]; then
   echo "CI/CD Features are enabled"
 else
   echo "Warning! CI/CD Features are not available for LabVIEW"
