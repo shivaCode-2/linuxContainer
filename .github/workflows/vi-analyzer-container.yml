@@ -1,3 +1,7 @@
+# Github Action Configuration file
+# Pulls the docker image
+# Run the image and run VI Analyzer tests on VIs present on the repo
+
 name: VI Analyzer Tests
 
 on:
