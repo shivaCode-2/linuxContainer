@@ -24,20 +24,26 @@ OUTPUT=$(LabVIEWCLI -LogToConsole true \
 echo "Done running of VI Analyzer Tests"
 echo "LabVIEWCLI Output:"
 echo "$OUTPUT"
-FAILED_COUNT=$(grep -i '^Failed Tests' "$REPORT_PATH" \
-  | awk '{print $2}' \
-  || echo 0
+FAILED_COUNT=$(
+  grep -i '^Failed Tests' "$REPORT_PATH" \
+    | awk '{print $NF}'
 )
 
-echo "Number of failed tests: $FAILED_COUNT"
-echo "Print Report..."
-cat $REPORT_PATH
+# 3) If that came back empty (no match), default to 0
+: "${FAILED_COUNT:=0}"
 
-# Exit with success (0) if no tests failed, else exit with error (1).
-if [ "$FAILED_COUNT" -eq 0 ]; then
-  echo "All tests passed."
-  exit 0
-else
-  echo "Some tests failed. Exiting with error."
+# 4) Guard against non-numeric just in case
+if ! [[ "$FAILED_COUNT" =~ ^[0-9]+$ ]]; then
+  echo "Warning: parsed FAILED_COUNT ('$FAILED_COUNT') is not numeric, defaulting to 0" >&2
+  FAILED_COUNT=0
+fi
+
+echo "Number of failed tests: $FAILED_COUNT"
+
+if (( FAILED_COUNT > 0 )); then
+  echo "✖ Some tests failed. Exiting with error."
   exit 1
+else
+  echo "✔ All tests passed."
+  exit 0
 fi
