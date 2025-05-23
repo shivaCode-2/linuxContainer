@@ -19,8 +19,8 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: docker.io
-          username: shivacode02
-          password: ${{ secrets.DOCKER_CRED }}
+          username: ${{ secrets.DOCKER_UNAME }}
+          password: ${{ secrets.DOCKER_PASSWD }}
 
       - name: Pull Docker Image from Docker Hub
         run: docker pull docker.io/shivacode02/labview_linux:2025q3_beta
