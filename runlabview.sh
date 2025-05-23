@@ -24,7 +24,10 @@ OUTPUT=$(LabVIEWCLI -LogToConsole true \
 echo "Done running of VI Analyzer Tests"
 echo "LabVIEWCLI Output:"
 echo "$OUTPUT"
-FAILED_COUNT=$(echo "$OUTPUT" | grep -i "Failed Tests" | grep -Eo '[0-9]+' | head -n 1)
+FAILED_COUNT=$(grep -i '^Failed Tests' "$REPORT_PATH" \
+  | awk '{print $2}' \
+  || echo 0
+)
 
 echo "Number of failed tests: $FAILED_COUNT"
 echo "Print Report..."
