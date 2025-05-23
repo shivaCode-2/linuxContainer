@@ -22,8 +22,8 @@ OUTPUT=$(LabVIEWCLI -LogToConsole true \
 -LabVIEWPath $LABVIEW_PATH)
 
 echo "Done running of VI Analyzer Tests"
-# After you’ve run LabVIEWCLI and emitted the report...
 echo "Print Report..."
+echo "────────────────────────────────────────────────────────────"
 cat "$REPORT_PATH"
 echo "────────────────────────────────────────────────────────────"
 
