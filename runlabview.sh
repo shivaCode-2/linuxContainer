@@ -22,17 +22,20 @@ OUTPUT=$(LabVIEWCLI -LogToConsole true \
 -LabVIEWPath $LABVIEW_PATH)
 
 echo "Done running of VI Analyzer Tests"
-echo "LabVIEWCLI Output:"
-echo "$OUTPUT"
+# After you’ve run LabVIEWCLI and emitted the report...
+echo "Print Report..."
+cat "$REPORT_PATH"
+echo "────────────────────────────────────────────────────────────"
+
+# 1) Extract the number from the report file, anchor to “Failed Tests”
 FAILED_COUNT=$(
-  grep -i '^Failed Tests' "$REPORT_PATH" \
-    | awk '{print $NF}'
+  sed -n 's/^Failed Tests[[:space:]]*\([0-9]\+\)$/\1/p' "$REPORT_PATH"
 )
 
-# 3) If that came back empty (no match), default to 0
+# 2) Default to zero if it didn’t match
 : "${FAILED_COUNT:=0}"
 
-# 4) Guard against non-numeric just in case
+# 3) Sanity-check numeric
 if ! [[ "$FAILED_COUNT" =~ ^[0-9]+$ ]]; then
   echo "Warning: parsed FAILED_COUNT ('$FAILED_COUNT') is not numeric, defaulting to 0" >&2
   FAILED_COUNT=0
@@ -40,6 +43,7 @@ fi
 
 echo "Number of failed tests: $FAILED_COUNT"
 
+# 4) Exit based on count
 if (( FAILED_COUNT > 0 )); then
   echo "✖ Some tests failed. Exiting with error."
   exit 1
