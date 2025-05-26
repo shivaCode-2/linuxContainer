@@ -58,7 +58,7 @@ Leverage this repository’s built-in GitHub Actions and helper scripts to run L
 You can customize this workflow by adding jobs, adjusting environment variables, or changing the mounted volumes to match your use case.
 
 #### How to Use This Repo for CI-Driven LabVIEWCLI Tests
-1. **Fork the repository**  
+1.  **Fork the repository**  
    - Visit: `https://github.com/shivaCode-2/linuxContainer`  
    - Click **Fork** to create your own copy.
 
@@ -67,6 +67,7 @@ You can customize this workflow by adding jobs, adjusting environment variables,
    git clone https://github.com/<your-username>/linuxContainer.git
    cd linuxContainer
    ```
+   
 3. **Create a feature branch**
 ```bash
 git checkout -b my-ci-test
@@ -77,11 +78,12 @@ Make any changes you like—add or update VIs under Test-VIs/, tweak runlabview.
 ```bash
 git push origin my-ci-test
 ```
+
 5. **Open a Pull Request**
 - In your fork on GitHub, click Compare & pull request.
 - Target branch: `shivaCode-2/linuxContainer:main`
 
-6.**Watch the CI pipeline**
+6. **Watch the CI pipeline**
 The “Run VI Analyzer” workflow will automatically:
 - Authenticate to GHCR
 - Pull labview_linux:2025q3_beta
