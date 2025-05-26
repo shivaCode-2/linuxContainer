@@ -33,30 +33,67 @@ Both options let you adapt the container to your workflows—either by extending
 - Git
 
 ## Installation
-### **Automated CI Workflow**
-This repo contains all the necessary logic and files to run LabVIEWCLI on a docker container. Below is the repository structure explained.
+### Automated CI Workflow
+Leverage this repository’s built-in GitHub Actions and helper scripts to run LabVIEWCLI commands inside a Docker container. The main components include:
 
 #### Repo Structure
-1. **Test-VIs**: Contains sample VIs on which we run the VI Analyzer tests.
-2. **runlabview.sh**: Bash script containing the logic to run LabVIEWCLI operations on the Test-VIs. The script currently runs MassCompile and VIAnalyzer tests but feel free to add your own operations and logic that suit your use case.
-3. **.github/workflows/vi-analyzer-container.yml**: This is the YAML configuration for our github action. This action   
-   - Login into Github Container Registry
-   - Pull in the image **labview_linux:2025q3_beta**
-   - Mounts the repository in the container to access the Test-VIs and start the container with **runlabview.sh** as its entrypoint.
-You can modify the action YAML configuration to add more jobs into your action.
 
-#### How to use this repo to run CI operations
-This repository already has access to the private container image. To use this repo and its actions you first need to make a fork out of this repo.
-1. Go to the linuxContainer repository located at: https://github.com/shivaCode-2/linuxContainer
-2. You need to fork this repository to create a new one. You can name it anything you prefer.
-3. After forking the repository, clone the newly forked repo onto your local system.
-4. Once cloned, make a new testing branch <branch_name> and make some dummy changes in the files and then use git push origin <branch_name>.
-5. After completing the push, navigate to the original repository (not the forked one). You should see a message prompting you to create a pull request, similar to the following:
-![image](https://github.com/user-attachments/assets/78bab1ef-e8a8-422c-9a82-8cb07ade463d)
-6. Click on Compare & pull request and make a new pull request.
-7. Once created, you should see the action Run VI Analyzer in the PR details.
-8. The action will pull in the docker image, run the script **runlabview.sh** to MassCompile and run VI analyzer tests on repo:Test-VIs directory and display the results.
-9. You can modify the bash script to have your own set of operations that you want to try out with LabVIEWCLI.
+- **Test-VIs/**  
+  A collection of sample VIs used by the CI pipeline for MassCompile and VI Analyzer tests. You can add, remove, or reorganize VIs here to include your own test cases.
+
+- **runlabview.sh**  
+  The entry-point script that invokes `labviewcli` inside the container. By default it runs:
+  1. **MassCompile** on all VIs under `Test-VIs/`  
+  2. **VIAnalyzer** against a predefined project  
+  Feel free to extend or replace these commands to suit your workflows.
+
+- **.github/workflows/vi-analyzer-container.yml**  
+  Defines the GitHub Actions pipeline:
+  1. **Authenticate** with GitHub Container Registry  
+  2. **Pull** the `labview_linux:2025q3_beta` image  
+  3. **Mount** the repository into the container  
+  4. **Run** `runlabview.sh` and capture test results  
+  5. **Report** pass/fail status back to the PR checks  
+
+You can customize this workflow by adding jobs, adjusting environment variables, or changing the mounted volumes to match your use case.
+
+#### How to Use This Repo for CI-Driven LabVIEWCLI Tests
+1. **Fork the repository**  
+   - Visit: `https://github.com/shivaCode-2/linuxContainer`  
+   - Click **Fork** to create your own copy.
+
+2. **Clone your fork locally**  
+   ```bash
+   git clone https://github.com/<your-username>/linuxContainer.git
+   cd linuxContainer
+   ```
+3. Create a feature branch
+```bash
+git checkout -b my-ci-test
+```
+Make any changes you like—add or update VIs under Test-VIs/, tweak runlabview.sh, etc.
+4. Push your branch
+```bash
+git push origin my-ci-test
+```
+5. Open a Pull Request
+- In your fork on GitHub, click Compare & pull request.
+- Target branch: `shivaCode-2/linuxContainer:main`
+
+6. Watch the CI pipeline
+The “Run VI Analyzer” workflow will automatically:
+- Authenticate to GHCR
+- Pull labview_linux:2025q3_beta
+- Mount your repo and execute runlabview.sh
+- Report pass/fail in the PR checks
+
+7. Review results & iterate
+- Click the Actions tab or PR checks to see logs.
+- Update your scripts or VIs, push new commits, and watch the workflow run again.
+
+8. Customize for your needs
+- Modify runlabview.sh to add/remove CLI commands.
+- Edit `.github/workflows/vi-analyzer-container.yml` to adjust jobs, environment variables, or matrix settings.
 
 
 ### Direct Image Access
