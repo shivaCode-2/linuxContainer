@@ -16,7 +16,7 @@ Welcome to the beta release of our containerized LabVIEW environment! This READM
   - [Pulling in the image](#pulling-in-the-image)  
   - [Running the image in interactive mode](#running-the-image-in-interactive-mode)  
   - [Executing MassCompile using LabVIEWCLI](#executing-masscompile-using-labviewcli)  
-  - [Example Use Case for Automated CI Workflow](#example-use-case-for-automated-ci-workflow)  
+  - [Integration with CI/CD workflows](#example-use-case-for-automated-ci-workflow)  
       - [Repo Structure](#repo-structure)  
       - [Integrating LabVIEWCLI Tests into Your CI Pipeline (Example)](#integrating-labviewcli-tests-into-your-ci-pipeline-example)  
 - [FAQs](#faqs)  
@@ -82,7 +82,7 @@ Pull and run the `labview_linux:2025q3_beta` image directly in your own environm
 ```
 ![image](https://github.com/user-attachments/assets/09fc35e9-c33b-448d-ac37-2ef84c37a396)
    
-### Example Use Case for Automated CI Workflow
+### Integration with CI/CD workflows
 You can use this repository as an example of how to integrate a LabVIEWCLI Docker image into your CI/CD workflows, such as GitHub Actions. Essentially, this repository serves as a practical demonstration of how to:
 1. Run LabVIEWCLI commands within a Docker container: This shows you how to encapsulate your LabVIEWCLI operations in a consistent and isolated environment.
 2. Leverage built-in GitHub Actions and helper scripts: The repository provides pre-configured workflows and scripts that illustrate how to automate tasks involving the LabVIEWCLI Docker image in a CI/CD pipeline.
@@ -152,9 +152,7 @@ This section demonstrates how you can leverage this repository to integrate LabV
       - Modify runlabview.sh to add/remove CLI commands.
       - Edit `.github/workflows/vi-analyzer-container.yml` to adjust jobs, environment variables, or matrix settings.
   
-You can also use this repo and its YAML configuration to setup your own pipeline and CICD Environment. This repo only serves as an example to get you started on how to do that.
-
-
+Feel free to tailor the workflow to your needs—add or remove jobs, adjust environment variables, or modify volume mounts. You can also use the provided YAML definitions as a springboard for your own CI/CD pipelines. This repository is meant as a reference implementation to help you quickly integrate LabVIEWCLI commands into your automated workflows.
 
 ## FAQs
 ### 1. How do I get access to the private container image?  
