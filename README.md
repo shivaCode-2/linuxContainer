@@ -80,23 +80,23 @@ You can customize this workflow by adding jobs, adjusting environment variables,
    ```
 
 5. **Open a Pull Request**
-- In your fork on GitHub, click Compare & pull request.
-- Target branch: `shivaCode-2/linuxContainer:main`
+   - In your fork on GitHub, click Compare & pull request.
+   - Target branch: `shivaCode-2/linuxContainer:main`
 
 6. **Watch the CI pipeline**
-The “Run VI Analyzer” workflow will automatically:
-- Authenticate to GHCR
-- Pull labview_linux:2025q3_beta
-- Mount your repo and execute runlabview.sh
-- Report pass/fail in the PR checks-
+   The “Run VI Analyzer” workflow will automatically:
+   - Authenticate to GHCR
+   - Pull labview_linux:2025q3_beta
+   - Mount your repo and execute runlabview.sh
+   - Report pass/fail in the PR checks-
 
 7. **Review results & iterate**
-- Click the Actions tab or PR checks to see logs.
-- Update your scripts or VIs, push new commits, and watch the workflow run again.
+   - Click the Actions tab or PR checks to see logs.
+   - Update your scripts or VIs, push new commits, and watch the workflow run again.
 
 8. **Customize for your needs**
-- Modify runlabview.sh to add/remove CLI commands.
-- Edit `.github/workflows/vi-analyzer-container.yml` to adjust jobs, environment variables, or matrix settings.
+   - Modify runlabview.sh to add/remove CLI commands.
+   - Edit `.github/workflows/vi-analyzer-container.yml` to adjust jobs, environment variables, or matrix settings.
 
 
 ### Direct Image Access
