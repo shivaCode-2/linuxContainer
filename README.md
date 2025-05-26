@@ -100,16 +100,42 @@ You can customize this workflow by adding jobs, adjusting environment variables,
 
 
 ### Direct Image Access
-1. The image is currently privately hosted on GitHub container registry (ghcr.io)
-2. To access the image, you need to be added as a contributor for the package. If you want to access this beta version, please mail your GitHub Username to shivang.sharma@emerson.com
-3. Once you are added as a contributor, you can access and download the image.
+
+Use this mode if you prefer to pull and run the container yourself without the CI workflow.
+
+1. **Private Registry**  
+   The LabVIEW Linux image is hosted privately on GitHub Container Registry (`ghcr.io`).
+
+2. **Request Access**  
+   Email your GitHub username to `shivang.sharma@emerson.com`. We’ll grant you “read” permissions for the `labview_linux` package.
+
+3. **Authenticate & Pull**  
+   ```bash
+   # Log in to GHCR
+   docker login ghcr.io -u <your-github-username>
+   # Enter a Personal Access Token (with at least read:packages scope) when prompted
+
+   # Pull the beta image
+   docker pull ghcr.io/shivacode-2/labview_linux:2025q3_beta
+   ```
 
 #### How to get the image locally
-1. Log into GitHub Container registry using the following command: docker login ghcr.io -u **your_username**
-2. You will be prompted to enter the password. The password should be your Personal Access Token which atleast have the read priviledges.
-3. Once login succeeds, you can download the image using this command: docker pull ghcr.io/shivacode-2/labview_linux:2025q3_beta
-4. Once pulled, you can use the docker run command to start using the image. If you do not want to mount any directories or modify any network configuration, simply use the command docker run -it ghcr.io/shivacode-2/labview_linux:2025q3_beta and you would be dropped into the container's shell.
-5. Once you are on the shell terminal, you can use LabVIEWCLI for operations like MassCompile, ExecuteBuildSpec etc.
+1. **Authenticate to GitHub Container Registry**  
+   ```bash
+   docker login ghcr.io -u <YOUR_GITHUB_USERNAME>
+   ```
+   When prompted for a password, enter a Personal Access Token with at least the read:packages scope.
+2. **Pull the LabVIEW Linux Beta Image**  
+   ```bash
+   docker pull ghcr.io/shivacode-2/labview_linux:2025q3_beta
+   ```
+3. **Run the Container (Interactive Shell)**  
+   ```bash
+   docker run --rm -it ghcr.io/shivacode-2/labview_linux:2025q3_beta
+   ```
+   This command launches the container and drops you straight into a Bash shell—no volume mounts or network settings required.
+4. **Run LabVIEWCLI Operations**  
+   Once inside the container shell, execute any `labviewcli` command.
 
 ## Example Usage
 
