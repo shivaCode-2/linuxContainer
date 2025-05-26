@@ -107,8 +107,7 @@ By exploring this repository, you can gain insights into setting up and running 
   4. **Run** `runlabview.sh` and capture test results  
   5. **Report** pass/fail status back to the PR checks  
 
-You can customize this workflow by adding jobs, adjusting environment variables, or changing the mounted volumes to match your use case.
-You can also utilize this repository and its YAML configurations as a template and guide for setting up your own CI/CD pipeline and environment. This repository is provided solely as an example to help you get started with integrating LabVIEWCLI operations into your automated workflows.
+Feel free to tailor the workflow to your needs—add or remove jobs, adjust environment variables, or modify volume mounts. You can also use the provided YAML definitions as a springboard for your own CI/CD pipelines. This repository is meant as a reference implementation to help you quickly integrate LabVIEWCLI commands into your automated workflows.
 
 #### Integrating LabVIEWCLI Tests into Your CI Pipeline (Example)
 This section demonstrates how you can leverage this repository to integrate LabVIEWCLI-driven tests into your Continuous Integration (CI) pipeline. It provides a practical example of setting up and running LabVIEWCLI tests automatically as part of your development workflow.
