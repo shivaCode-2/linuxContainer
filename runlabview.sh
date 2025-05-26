@@ -19,6 +19,8 @@ OUTPUT_MASSCOMPILE=$(LabVIEWCLI -LogToConsole TRUE \
 -LabVIEWPath $LABVIEW_PATH)
 
 echo "(Debug) Done Running Masscompile Operation"
+echo "Printing Results..."
+echo $OUTPUT_MASSCOMPILE
 echo "────────────────────────────────────────────────────────────"
 
 echo "(Debug) Running LabVIEWCLI VIAnalyzer with the following parameters:"
