@@ -84,12 +84,11 @@ You can customize this workflow by adding jobs, adjusting environment variables,
    - Target branch: `shivaCode-2/linuxContainer:main`
 
 10. **Watch the CI pipeline**
-
-   The “Run VI Analyzer” workflow will automatically:
-   - Authenticate to GHCR
-   - Pull labview_linux:2025q3_beta
-   - Mount your repo and execute runlabview.sh
-   - Report pass/fail in the PR checks-
+    The “Run VI Analyzer” workflow will automatically:
+      - Authenticate to GHCR
+      - Pull labview_linux:2025q3_beta
+      - Mount your repo and execute runlabview.sh
+      - Report pass/fail in the PR checks-
 
 11. **Review results & iterate**
    - Click the Actions tab or PR checks to see logs.
