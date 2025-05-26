@@ -31,3 +31,17 @@ Both options let you adapt the container to your workflows—either by extending
 - At least 8 GB RAM and 4 CPU cores available
 - Internet connection for downloading the container image
 - Git
+
+## Installation
+### **Automated CI Workflow**
+This repo contains all the necessary logic and files to run LabVIEWCLI on a docker container. Below is the repository structure explained.
+1. **Test-VIs**: Contains sample VIs on which we run the VI Analyzer tests.
+2. **runlabview.sh**: Bash script containing the logic to run LabVIEWCLI operations on the Test-VIs. The script currently runs MassCompile and VIAnalyzer tests but feel free to add your own operations and logic that suit your use case.
+3. **.github/workflows/vi-analyzer-container.yml**: This is the YAML configuration for our github action. This action   
+   - Login into Github Container Registry
+   - Pull in the image **labview_linux:2025q3_beta**
+   - Mounts the repository in the container to access the Test-VIs and start the container with **runlabview.sh** as its entrypoint.
+
+
+
+
