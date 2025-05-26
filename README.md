@@ -79,9 +79,25 @@ You need to be added as a contributor on the GitHub Packages feed. Simply email 
 ```bash
 docker login ghcr.io -u <your-username>
 docker pull ghcr.io/shivacode-2/labview_linux:2025q3_beta
+```
 
+### 2. Which LabVIEW versions are supported inside the container?
+The beta image bundles LabVIEW 2025 Q3. CLI commands (labviewcli) will only work on VIs built for LabVIEW 2025 or earlier.
 
+### 3. Can I add my own VIs to the CI workflow?
+Yes. In your fork of linuxContainer, drop VIs into Test-VIs/ (or create subfolders), then update runlabview.sh with the new paths or operations. When you open a PR, the GitHub Action will run your tests automatically.
 
+### 4. How do I customize the GitHub Actions workflow
+Edit `.github/workflows/vi-analyzer-container.yml`:
+1. Add or remove jobs under jobs
+2. Change CLI commands in the runlabview.sh
+3. Adjust mount points, environment variables, or matrix configurations as needed
 
+### 5. What system resources does the container require?
+We recommend at least 8 GB RAM and 4 CPU cores for smooth MassCompile or VI Analyzer runs. You can adjust Docker’s resource allocation in your Docker Desktop (or engine) settings.
+
+### 6. Who should I contact for support or to report bugs?
+1. Issues & feature requests: https://github.com/shivaCode-2/linuxContainer/issues
+2. Direct support: email shivang.sharma@emerson.com
 
 
