@@ -14,27 +14,53 @@ Welcome to the beta release of our containerized LabVIEW environment! This READM
 
 ---
 ## Overview
-
-This beta release offers two delivery modes for trying out our LabVIEW container:
-
-1. **Automated CI Workflow**  
-   Fork and explore the companion repo at https://github.com/shivaCode-2/linuxContainer. It includes a GitHub Actions pipeline that when a Pull Request is raised,  pulls the `labview_linux:2025q3_beta` image, runs LabVIEW CLI operations on sample VIs in the repo, and validates the results.
-
-2. **Direct Image Access**  
-   Pull and run the `labview_linux:2025q3_beta` image directly in your own environment. We will add you as a contributor on the private GitHub Package Registry so you can authenticate and download the image as needed.
-
-Both options let you adapt the container to your workflows—either by extending the provided CI setup or integrating the image into your own processes.
+Pull and run the `labview_linux:2025q3_beta` image directly in your own environment. We will add you as a contributor on the private GitHub Package Registry so you can authenticate and download the image as needed.
 
 ## Prerequisites
-
 - Docker Engine (version 20.10+)
 - At least 8 GB RAM and 4 CPU cores available
 - Internet connection for downloading the container image
 - Git
 
 ## Installation
-### Automated CI Workflow
-Leverage this repository’s built-in GitHub Actions and helper scripts to run LabVIEWCLI commands inside a Docker container. The main components include:
+1. **Private Registry**  
+   The LabVIEW Linux image is hosted privately on GitHub Container Registry (`ghcr.io`).
+
+2. **Request Access**  
+   Email your GitHub username to `shivang.sharma@emerson.com`. We’ll grant you “read” permissions for the `labview_linux` package.
+
+3. **Authenticate & Pull**  
+   ```bash
+   # Log in to GHCR
+   docker login ghcr.io -u <your-github-username>
+   # Enter a Personal Access Token (with at least read:packages scope) when prompted
+
+   # Pull the beta image
+   docker pull ghcr.io/shivacode-2/labview_linux:2025q3_beta
+   ```
+4. **Run the Container (Interactive Shell)**  
+   ```bash
+   docker run --rm -it ghcr.io/shivacode-2/labview_linux:2025q3_beta
+   ```
+   This command launches the container and drops you straight into a Bash shell—no volume mounts or network settings required.
+5. **Run LabVIEWCLI Operations**  
+   Once inside the container shell, execute any `labviewcli` command.
+
+## Example Usage
+### Pulling in the image
+![image](https://github.com/user-attachments/assets/054826e4-fec9-424e-a209-69499db298d4)
+
+### Running the image in interactive mode
+![image](https://github.com/user-attachments/assets/8e413608-d59e-4522-adc5-0df64df08ccf)
+
+### Executing MassCompile using LabVIEWCLI
+![image](https://github.com/user-attachments/assets/09fc35e9-c33b-448d-ac37-2ef84c37a396)
+   
+### Example Use Case for Automated CI Workflow
+You can use this repository as an example of how to integrate a LabVIEWCLI Docker image into your CI/CD workflows, such as GitHub Actions. Essentially, this repository serves as a practical demonstration of how to:
+1. Run LabVIEWCLI commands within a Docker container: This shows you how to encapsulate your LabVIEWCLI operations in a consistent and isolated environment.
+2. Leverage built-in GitHub Actions and helper scripts: The repository provides pre-configured workflows and scripts that illustrate how to automate tasks involving the LabVIEWCLI Docker image in a CI/CD pipeline.
+By exploring this repository, you can gain insights into setting up and running LabVIEWCLI-based processes as part of your automated build, test, and deployment strategies.
 
 #### Repo Structure
 
@@ -99,45 +125,6 @@ You can customize this workflow by adding jobs, adjusting environment variables,
       - Edit `.github/workflows/vi-analyzer-container.yml` to adjust jobs, environment variables, or matrix settings.
 
 
-### Direct Image Access
-
-Use this mode if you prefer to pull and run the container yourself without the CI workflow.
-
-1. **Private Registry**  
-   The LabVIEW Linux image is hosted privately on GitHub Container Registry (`ghcr.io`).
-
-2. **Request Access**  
-   Email your GitHub username to `shivang.sharma@emerson.com`. We’ll grant you “read” permissions for the `labview_linux` package.
-
-3. **Authenticate & Pull**  
-   ```bash
-   # Log in to GHCR
-   docker login ghcr.io -u <your-github-username>
-   # Enter a Personal Access Token (with at least read:packages scope) when prompted
-
-   # Pull the beta image
-   docker pull ghcr.io/shivacode-2/labview_linux:2025q3_beta
-   ```
-
-#### How to get the image locally
-1. **Authenticate to GitHub Container Registry**  
-   ```bash
-   docker login ghcr.io -u <YOUR_GITHUB_USERNAME>
-   ```
-   When prompted for a password, enter a Personal Access Token with at least the read:packages scope.
-2. **Pull the LabVIEW Linux Beta Image**  
-   ```bash
-   docker pull ghcr.io/shivacode-2/labview_linux:2025q3_beta
-   ```
-3. **Run the Container (Interactive Shell)**  
-   ```bash
-   docker run --rm -it ghcr.io/shivacode-2/labview_linux:2025q3_beta
-   ```
-   This command launches the container and drops you straight into a Bash shell—no volume mounts or network settings required.
-4. **Run LabVIEWCLI Operations**  
-   Once inside the container shell, execute any `labviewcli` command.
-
-## Example Usage
 
 ## FAQs
 ### 1. How do I get access to the private container image?  
@@ -165,5 +152,7 @@ We recommend at least 8 GB RAM and 4 CPU cores for smooth MassCompile or VI Anal
 ### 6. Who should I contact for support or to report bugs?
 1. Issues & feature requests: https://github.com/shivaCode-2/linuxContainer/issues
 2. Direct support: email shivang.sharma@emerson.com
+
+
 
 
