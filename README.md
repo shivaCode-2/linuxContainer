@@ -25,4 +25,9 @@ This beta release offers two delivery modes for trying out our LabVIEW container
 
 Both options let you adapt the container to your workflows—either by extending the provided CI setup or integrating the image into your own processes.
 
+## Prerequisites
 
+- Docker Engine (version 20.10+)
+- At least 8 GB RAM and 4 CPU cores available
+- Internet connection for downloading the container image
+- Git
