@@ -67,31 +67,31 @@ You can customize this workflow by adding jobs, adjusting environment variables,
    git clone https://github.com/<your-username>/linuxContainer.git
    cd linuxContainer
    ```
-3. Create a feature branch
+3. **Create a feature branch**
 ```bash
 git checkout -b my-ci-test
 ```
 Make any changes you like—add or update VIs under Test-VIs/, tweak runlabview.sh, etc.
-4. Push your branch
+4. **Push your branch**
 ```bash
 git push origin my-ci-test
 ```
-5. Open a Pull Request
+5. **Open a Pull Request**
 - In your fork on GitHub, click Compare & pull request.
 - Target branch: `shivaCode-2/linuxContainer:main`
 
-6. Watch the CI pipeline
+6.**Watch the CI pipeline**
 The “Run VI Analyzer” workflow will automatically:
 - Authenticate to GHCR
 - Pull labview_linux:2025q3_beta
 - Mount your repo and execute runlabview.sh
 - Report pass/fail in the PR checks
 
-7. Review results & iterate
+7. **Review results & iterate**
 - Click the Actions tab or PR checks to see logs.
 - Update your scripts or VIs, push new commits, and watch the workflow run again.
 
-8. Customize for your needs
+8. **Customize for your needs**
 - Modify runlabview.sh to add/remove CLI commands.
 - Edit `.github/workflows/vi-analyzer-container.yml` to adjust jobs, environment variables, or matrix settings.
 
