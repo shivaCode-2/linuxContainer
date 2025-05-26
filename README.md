@@ -67,17 +67,17 @@ You can customize this workflow by adding jobs, adjusting environment variables,
    git clone https://github.com/<your-username>/linuxContainer.git
    cd linuxContainer
    ```
-   
+
 3. **Create a feature branch**
-```bash
-git checkout -b my-ci-test
-```
-Make any changes you like—add or update VIs under Test-VIs/, tweak runlabview.sh, etc.
+   ```bash
+   git checkout -b my-ci-test
+   ```
+   Make any changes you like—add or update VIs under Test-VIs/, tweak runlabview.sh, etc.
 
 4. **Push your branch**
-```bash
-git push origin my-ci-test
-```
+   ```bash
+   git push origin my-ci-test
+   ```
 
 5. **Open a Pull Request**
 - In your fork on GitHub, click Compare & pull request.
@@ -88,7 +88,7 @@ The “Run VI Analyzer” workflow will automatically:
 - Authenticate to GHCR
 - Pull labview_linux:2025q3_beta
 - Mount your repo and execute runlabview.sh
-- Report pass/fail in the PR checks
+- Report pass/fail in the PR checks-
 
 7. **Review results & iterate**
 - Click the Actions tab or PR checks to see logs.
