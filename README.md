@@ -1,2 +1,2 @@
-# linuxContainer
-Test repo to understand CI/CD Scenarios involving LabVIEW and Linux Container
+# LabVIEW Container Beta
+Welcome to the beta release of our containerized LabVIEW environment! This README provides instructions for getting started, running the container, and reporting feedback.
