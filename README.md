@@ -35,12 +35,29 @@ Both options let you adapt the container to your workflows—either by extending
 ## Installation
 ### **Automated CI Workflow**
 This repo contains all the necessary logic and files to run LabVIEWCLI on a docker container. Below is the repository structure explained.
+
+#### Repo Structure
 1. **Test-VIs**: Contains sample VIs on which we run the VI Analyzer tests.
 2. **runlabview.sh**: Bash script containing the logic to run LabVIEWCLI operations on the Test-VIs. The script currently runs MassCompile and VIAnalyzer tests but feel free to add your own operations and logic that suit your use case.
 3. **.github/workflows/vi-analyzer-container.yml**: This is the YAML configuration for our github action. This action   
    - Login into Github Container Registry
    - Pull in the image **labview_linux:2025q3_beta**
    - Mounts the repository in the container to access the Test-VIs and start the container with **runlabview.sh** as its entrypoint.
+You can modify the action YAML configuration to add more jobs into your action.
+
+#### How to use this repo to run CI operations
+This repository already has access to the private container image. To use this repo and its actions you first need to make a fork out of this repo.
+1. Go to the linuxContainer repository located at: https://github.com/shivaCode-2/linuxContainer
+2. You need to fork this repository to create a new one. You can name it anything you prefer.
+3. After forking the repository, clone the newly forked repo onto your local system.
+4. Once cloned, make a new testing branch <branch_name> and make some dummy changes in the files and then use git push origin <branch_name>.
+5. After completing the push, navigate to the original repository (not the forked one). You should see a message prompting you to create a pull request, similar to the following:
+![image](https://github.com/user-attachments/assets/78bab1ef-e8a8-422c-9a82-8cb07ade463d)
+6. Click on Compare & pull request and make a new pull request.
+7. Once created, you should see the action Run VI Analyzer in the PR details.
+8. The action will pull in the docker image, run the script **runlabview.sh** to MassCompile and run VI analyzer tests on repo:Test-VIs directory and display the results.
+9. You can modify the bash script to have your own set of operations that you want to try out with LabVIEWCLI
+
 
 
 
