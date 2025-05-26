@@ -25,7 +25,7 @@ jobs:
       - name: Pull Docker Image from Docker Hub
         run: docker pull docker.io/shivacode02/labview_linux:2025q3_beta
 
-      - name: Run VI Analyzer Tests
+      - name: Run LabVIEWCLI Operations
         run: |
           docker run --rm \
             -v "${{ github.workspace }}:/workspace" \
