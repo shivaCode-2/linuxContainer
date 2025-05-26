@@ -65,9 +65,20 @@ This repository already has access to the private container image. To use this r
 3. Once you are added as a contributor, you can access and download the image.
 
 #### How to get the image locally
-1. Log into GitHub Container registry using the following command: docker login ghcr.io -u **<username>**
+1. Log into GitHub Container registry using the following command: docker login ghcr.io -u **your_username**
 2. You will be prompted to enter the password. The password should be your Personal Access Token which atleast have the read priviledges.
 3. Once login succeeds, you can download the image using this command: docker pull ghcr.io/shivacode-2/labview_linux:2025q3_beta
+4. Once pulled, you can use the docker run command to start using the image. If you do not want to mount any directories or modify any network configuration, simply use the command docker run -it ghcr.io/shivacode-2/labview_linux:2025q3_beta and you would be dropped into the container's shell.
+5. Once you are on the shell terminal, you can use LabVIEWCLI for operations like MassCompile, ExecuteBuildSpec etc.
+
+## Example Usage
+
+## FAQs
+### 1. How do I get access to the private container image?  
+You need to be added as a contributor on the GitHub Packages feed. Simply email your GitHub username to `shivang.sharma@emerson.com` and we’ll grant you “read” rights. Once added, log in and pull with:  
+```bash
+docker login ghcr.io -u <your-username>
+docker pull ghcr.io/shivacode-2/labview_linux:2025q3_beta
 
 
 
