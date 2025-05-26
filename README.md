@@ -1,18 +1,34 @@
 # LabVIEW Container Beta
 Welcome to the beta release of our containerized LabVIEW environment! This README provides instructions for getting started, running the container, and reporting feedback.
 
+---
 ## Table of Contents
 
-1. [Overview](#overview)
-2. [Prerequisites](#prerequisites)
-3. [Installation](#installation)
-4. [Running the Container](#running-the-container)
-5. [Usage Examples](#usage-examples)
-6. [Reporting Feedback](#reporting-feedback)
-7. [Contributing](#contributing)
-8. [Support](#support)
+- [Overview](#overview)  
+- [Prerequisites](#prerequisites)  
+- [Installation](#installation)  
+  - [Private Registry](#private-registry)  
+  - [Request Access](#request-access)  
+  - [Authenticate & Pull](#authenticate--pull)  
+  - [Run the Container (Interactive Shell)](#run-the-container-interactive-shell)  
+  - [Run LabVIEWCLI Operations](#run-labviewcli-operations)  
+- [Example Usage](#example-usage)  
+  - [Pulling in the image](#pulling-in-the-image)  
+  - [Running the image in interactive mode](#running-the-image-in-interactive-mode)  
+  - [Executing MassCompile using LabVIEWCLI](#executing-masscompile-using-labviewcli)  
+  - [Example Use Case for Automated CI Workflow](#example-use-case-for-automated-ci-workflow)  
+      - [Repo Structure](#repo-structure)  
+      - [Integrating LabVIEWCLI Tests into Your CI Pipeline (Example)](#integrating-labviewcli-tests-into-your-ci-pipeline-example)  
+- [FAQs](#faqs)  
+  - [1. How do I get access to the private container image?](#1-how-do-i-get-access-to-the-private-container-image)  
+  - [2. Which LabVIEW versions are supported inside the container?](#2-which-labview-versions-are-supported-inside-the-container)  
+  - [3. Can I add my own VIs to the CI workflow?](#3-can-i-add-my-own-vis-to-the-ci-workflow)  
+  - [4. How do I customize the GitHub Actions workflow?](#4-how-do-i-customize-the-github-actions-workflow)  
+  - [5. What system resources does the container require?](#5-what-system-resources-does-the-container-require)  
+  - [6. Who should I contact for support or to report bugs?](#6-who-should-i-contact-for-support-or-to-report-bugs)  
+- [Licensing Agreement](#licensing-agreement)  
 
----
+
 ## Overview
 Pull and run the `labview_linux:2025q3_beta` image directly in your own environment. We will add you as a contributor on the private GitHub Package Registry so you can authenticate and download the image as needed.
 
@@ -48,12 +64,22 @@ Pull and run the `labview_linux:2025q3_beta` image directly in your own environm
 
 ## Example Usage
 ### Pulling in the image
+```bash
+   docker pull ghcr.io/shivacode-2/labview_linux:2025q3_beta
+```
 ![image](https://github.com/user-attachments/assets/054826e4-fec9-424e-a209-69499db298d4)
 
 ### Running the image in interactive mode
+```bash
+   docker run -it ghcr.io/shivacode-2/labview_linux:2025q3_beta
+```
 ![image](https://github.com/user-attachments/assets/8e413608-d59e-4522-adc5-0df64df08ccf)
 
 ### Executing MassCompile using LabVIEWCLI
+```bash
+   # Inside Container
+   LabVIEWCLI -OperationName MassCompile -DirectoryToCompile /usr/local/natinst/LabVIEW-2025-64/examples/Arrays -LogToConsole TRUE -LabVIEWPath /usr/local/natinst/LabVIEW-2025-64/labviewprofull
+```
 ![image](https://github.com/user-attachments/assets/09fc35e9-c33b-448d-ac37-2ef84c37a396)
    
 ### Example Use Case for Automated CI Workflow
@@ -82,8 +108,11 @@ By exploring this repository, you can gain insights into setting up and running 
   5. **Report** pass/fail status back to the PR checks  
 
 You can customize this workflow by adding jobs, adjusting environment variables, or changing the mounted volumes to match your use case.
+You can also utilize this repository and its YAML configurations as a template and guide for setting up your own CI/CD pipeline and environment. This repository is provided solely as an example to help you get started with integrating LabVIEWCLI operations into your automated workflows.
 
-#### How to Use This Repo for CI-Driven LabVIEWCLI Tests
+#### Integrating LabVIEWCLI Tests into Your CI Pipeline (Example)
+This section demonstrates how you can leverage this repository to integrate LabVIEWCLI-driven tests into your Continuous Integration (CI) pipeline. It provides a practical example of setting up and running LabVIEWCLI tests automatically as part of your development workflow.
+
 1. **Fork the repository**
    - Visit: `https://github.com/shivaCode-2/linuxContainer`
    - Click **Fork** to create your own copy.
@@ -123,6 +152,8 @@ You can customize this workflow by adding jobs, adjusting environment variables,
 8. **Customize for your needs**
       - Modify runlabview.sh to add/remove CLI commands.
       - Edit `.github/workflows/vi-analyzer-container.yml` to adjust jobs, environment variables, or matrix settings.
+  
+You can also use this repo and its YAML configuration to setup your own pipeline and CICD Environment. This repo only serves as an example to get you started on how to do that.
 
 
 
@@ -152,6 +183,8 @@ We recommend at least 8 GB RAM and 4 CPU cores for smooth MassCompile or VI Anal
 ### 6. Who should I contact for support or to report bugs?
 1. Issues & feature requests: https://github.com/shivaCode-2/linuxContainer/issues
 2. Direct support: email shivang.sharma@emerson.com
+
+## Licensing Agreement
 
 
 
