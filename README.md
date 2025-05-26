@@ -16,7 +16,7 @@ Welcome to the beta release of our containerized LabVIEW environment! This READM
   - [Pulling in the image](#pulling-in-the-image)  
   - [Running the image in interactive mode](#running-the-image-in-interactive-mode)  
   - [Executing MassCompile using LabVIEWCLI](#executing-masscompile-using-labviewcli)  
-  - [Integration with CI/CD workflows](#example-use-case-for-automated-ci-workflow)  
+  - [Integration with CI/CD workflows](#integration-with-cicd-workflows)  
       - [Repo Structure](#repo-structure)  
       - [Integrating LabVIEWCLI Tests into Your CI Pipeline (Example)](#integrating-labviewcli-tests-into-your-ci-pipeline-example)  
 - [FAQs](#faqs)  
