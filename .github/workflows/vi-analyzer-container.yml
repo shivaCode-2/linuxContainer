@@ -1,4 +1,4 @@
-name: VI Analyzer Tests
+name: Run LabVIEWCLI on Linux Container
 
 on:
   pull_request:
