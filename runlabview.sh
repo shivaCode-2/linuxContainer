@@ -1,14 +1,16 @@
 #!/bin/bash
-# Verify that the configuration file exists.
 CONFIG_FILE='/workspace/Test-VIs/viaPassCase.viancfg'
 LABVIEW_PATH='/usr/local/natinst/LabVIEW-2025-64/labviewprofull'
 REPORT_PATH='/usr/local/natinst/ContainerExamples/Results.txt'
 MASSCOMPILE_DIR='/workspace/Test-VIs'
+
+# Verify that the configuration file exists.
 if [ ! -f "$CONFIG_FILE" ]; then
   echo "Error: Configuration file not found at $CONFIG_FILE, exiting...!"
   exit 1
 fi
-echo "########################################################################################"
+
+
 echo "Running LabVIEWCLI MassCompile with following parameters:"
 echo "DirectorytoCompile: $MASSCOMPILE_DIR"
 
@@ -17,8 +19,8 @@ OUTPUT_MASSCOMPILE=$(LabVIEWCLI -LogToConsole TRUE \
 -DirectoryToCompile $MASSCOMPILE_DIR \
 -LabVIEWPath $LABVIEW_PATH)
 
-echo "\nDone Running Masscompile Operation"
-echo "Printing Results...\n"
+echo "Done Running Masscompile Operation"
+echo -e "\nPrinting Results...\n"
 echo "########################################################################################"
 echo $OUTPUT_MASSCOMPILE
 echo "########################################################################################"
@@ -27,7 +29,7 @@ echo "Running LabVIEWCLI VIAnalyzer with the following parameters:"
 echo "ConfigPath: $CONFIG_FILE"
 echo "ReportPath: $REPORT_PATH"
 
-# Run the LabVIEWCLI command.
+# Run the LabVIEWCLI VIA command.
 OUTPUT=$(LabVIEWCLI -LogToConsole TRUE \
 -OperationName RunVIAnalyzer \
 -ConfigPath $CONFIG_FILE \
@@ -35,10 +37,9 @@ OUTPUT=$(LabVIEWCLI -LogToConsole TRUE \
 -LabVIEWPath $LABVIEW_PATH)
 
 echo "Done running of VI Analyzer Tests"
-echo "Printing Report..."
+echo "\nPrinting Results..."
 echo "########################################################################################"
 cat "$REPORT_PATH"
-echo "########################################################################################"
 
 # 1) Extract the number from the report file, anchor to “Failed Tests”
 FAILED_COUNT=$(
@@ -59,8 +60,10 @@ echo "Number of failed tests: $FAILED_COUNT"
 # 4) Exit based on count
 if (( FAILED_COUNT > 0 )); then
   echo "✖ Some tests failed. Exiting with error."
+  echo "########################################################################################"
   exit 1
 else
   echo "✔ All tests passed."
+  echo "########################################################################################"
   exit 0
 fi
