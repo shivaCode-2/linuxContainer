@@ -19,20 +19,19 @@ OUTPUT_MASSCOMPILE=$(LabVIEWCLI -LogToConsole TRUE \
 -DirectoryToCompile $MASSCOMPILE_DIR \
 -LabVIEWPath $LABVIEW_PATH)
 
+echo " "
 echo "Done Running Masscompile Operation"
-echo " "
 echo "Printing Results..."
-echo " "
 echo " "
 echo "########################################################################################"
 echo $OUTPUT_MASSCOMPILE
 echo "########################################################################################"
 echo " "
-echo " "
 
 echo "Running LabVIEWCLI VIAnalyzer with the following parameters:"
 echo "ConfigPath: $CONFIG_FILE"
 echo "ReportPath: $REPORT_PATH"
+echo " "
 
 # Run the LabVIEWCLI VIA command.
 OUTPUT=$(LabVIEWCLI -LogToConsole TRUE \
@@ -42,10 +41,7 @@ OUTPUT=$(LabVIEWCLI -LogToConsole TRUE \
 -LabVIEWPath $LABVIEW_PATH)
 
 echo "Done running of VI Analyzer Tests"
-echo " "
-
 echo "Printing Results..."
-echo " "
 echo " "
 echo "########################################################################################"
 cat "$REPORT_PATH"
