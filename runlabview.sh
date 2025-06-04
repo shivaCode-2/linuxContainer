@@ -3,30 +3,29 @@
 CONFIG_FILE='/workspace/Test-VIs/viaPassCase.viancfg'
 LABVIEW_PATH='/usr/local/natinst/LabVIEW-2025-64/labviewprofull'
 REPORT_PATH='/usr/local/natinst/ContainerExamples/Results.txt'
-MASSCOMPILE_DIR='/usr/local/natinst/LabVIEW-2025-64/examples/Arrays'
+MASSCOMPILE_DIR='/workspace/Test-VIs'
 if [ ! -f "$CONFIG_FILE" ]; then
   echo "Error: Configuration file not found at $CONFIG_FILE, exiting...!"
   exit 1
 fi
-echo "────────────────────────────────────────────────────────────"
-echo "(Debug) Running LabVIEWCLI MassCompile with following parameters:"
-echo "(Debug) DirectorytoCompile: $MASSCOMPILE_DIR"
-echo "(Debug) LabVIEWPath: $LABVIEW_PATH"
+echo "########################################################################################"
+echo "Running LabVIEWCLI MassCompile with following parameters:"
+echo "DirectorytoCompile: $MASSCOMPILE_DIR"
 
 OUTPUT_MASSCOMPILE=$(LabVIEWCLI -LogToConsole TRUE \
 -OperationName MassCompile \
 -DirectoryToCompile $MASSCOMPILE_DIR \
 -LabVIEWPath $LABVIEW_PATH)
 
-echo "(Debug) Done Running Masscompile Operation"
-echo "Printing Results..."
+echo "\nDone Running Masscompile Operation"
+echo "Printing Results...\n"
+echo "########################################################################################"
 echo $OUTPUT_MASSCOMPILE
-echo "────────────────────────────────────────────────────────────"
+echo "########################################################################################"
 
-echo "(Debug) Running LabVIEWCLI VIAnalyzer with the following parameters:"
-echo "(Debug) ConfigPath: $CONFIG_FILE"
-echo "(Debug) ReportPath: $REPORT_PATH"
-echo "(Debug) LabVIEWPath: $LABVIEW_PATH"
+echo "Running LabVIEWCLI VIAnalyzer with the following parameters:"
+echo "ConfigPath: $CONFIG_FILE"
+echo "ReportPath: $REPORT_PATH"
 
 # Run the LabVIEWCLI command.
 OUTPUT=$(LabVIEWCLI -LogToConsole TRUE \
@@ -36,10 +35,10 @@ OUTPUT=$(LabVIEWCLI -LogToConsole TRUE \
 -LabVIEWPath $LABVIEW_PATH)
 
 echo "Done running of VI Analyzer Tests"
-echo "Print Report..."
-echo "────────────────────────────────────────────────────────────"
+echo "Printing Report..."
+echo "########################################################################################"
 cat "$REPORT_PATH"
-echo "────────────────────────────────────────────────────────────"
+echo "########################################################################################"
 
 # 1) Extract the number from the report file, anchor to “Failed Tests”
 FAILED_COUNT=$(
