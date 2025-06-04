@@ -15,20 +15,20 @@ jobs:
         uses: actions/checkout@v3
 
       # Authenticate to Docker Hub
-      - name: Log in to Docker Container Registry
+      - name: Log in to GitHub Container Registry
         uses: docker/login-action@v2
         with:
-          registry: docker.io
-          username: ${{ secrets.DOCKER_UNAME }}
-          password: ${{ secrets.DOCKER_PASSWD }}
+          registry: ghcr.io
+          username: ${{ secrets.GHCR_UNAME }}
+          password: ${{ secrets.GHCR_PAT }}
 
       - name: Pull Docker Image from Docker Hub
-        run: docker pull docker.io/shivacode02/labview_linux:2025q3_beta
+        run: docker pull ghcr.io/shivacode-2/labview:2025q3-linux-beta
 
       - name: Run LabVIEWCLI Operations
         run: |
           docker run --rm \
             -v "${{ github.workspace }}:/workspace" \
-            docker.io/shivacode02/labview_linux:2025q3_beta \
+            ghcr.io/shivacode-2/labview:2025q3-linux-beta \
             bash -c "cd /workspace && chmod +x runlabview.sh && ./runlabview.sh"
 

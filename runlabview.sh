@@ -1,34 +1,39 @@
 #!/bin/bash
-# Verify that the configuration file exists.
 CONFIG_FILE='/workspace/Test-VIs/viaPassCase.viancfg'
 LABVIEW_PATH='/usr/local/natinst/LabVIEW-2025-64/labviewprofull'
 REPORT_PATH='/usr/local/natinst/ContainerExamples/Results.txt'
-MASSCOMPILE_DIR='/usr/local/natinst/LabVIEW-2025-64/examples/Arrays'
+MASSCOMPILE_DIR='/workspace/Test-VIs'
+
+# Verify that the configuration file exists.
 if [ ! -f "$CONFIG_FILE" ]; then
   echo "Error: Configuration file not found at $CONFIG_FILE, exiting...!"
   exit 1
 fi
-echo "────────────────────────────────────────────────────────────"
-echo "(Debug) Running LabVIEWCLI MassCompile with following parameters:"
-echo "(Debug) DirectorytoCompile: $MASSCOMPILE_DIR"
-echo "(Debug) LabVIEWPath: $LABVIEW_PATH"
+
+
+echo "Running LabVIEWCLI MassCompile with following parameters:"
+echo "DirectorytoCompile: $MASSCOMPILE_DIR"
 
 OUTPUT_MASSCOMPILE=$(LabVIEWCLI -LogToConsole TRUE \
 -OperationName MassCompile \
 -DirectoryToCompile $MASSCOMPILE_DIR \
 -LabVIEWPath $LABVIEW_PATH)
 
-echo "(Debug) Done Running Masscompile Operation"
+echo " "
+echo "Done Running Masscompile Operation"
 echo "Printing Results..."
+echo " "
+echo "########################################################################################"
 echo $OUTPUT_MASSCOMPILE
-echo "────────────────────────────────────────────────────────────"
+echo "########################################################################################"
+echo " "
 
-echo "(Debug) Running LabVIEWCLI VIAnalyzer with the following parameters:"
-echo "(Debug) ConfigPath: $CONFIG_FILE"
-echo "(Debug) ReportPath: $REPORT_PATH"
-echo "(Debug) LabVIEWPath: $LABVIEW_PATH"
+echo "Running LabVIEWCLI VIAnalyzer with the following parameters:"
+echo "ConfigPath: $CONFIG_FILE"
+echo "ReportPath: $REPORT_PATH"
+echo " "
 
-# Run the LabVIEWCLI command.
+# Run the LabVIEWCLI VIA command.
 OUTPUT=$(LabVIEWCLI -LogToConsole TRUE \
 -OperationName RunVIAnalyzer \
 -ConfigPath $CONFIG_FILE \
@@ -36,10 +41,10 @@ OUTPUT=$(LabVIEWCLI -LogToConsole TRUE \
 -LabVIEWPath $LABVIEW_PATH)
 
 echo "Done running of VI Analyzer Tests"
-echo "Print Report..."
-echo "────────────────────────────────────────────────────────────"
+echo "Printing Results..."
+echo " "
+echo "########################################################################################"
 cat "$REPORT_PATH"
-echo "────────────────────────────────────────────────────────────"
 
 # 1) Extract the number from the report file, anchor to “Failed Tests”
 FAILED_COUNT=$(
@@ -60,8 +65,10 @@ echo "Number of failed tests: $FAILED_COUNT"
 # 4) Exit based on count
 if (( FAILED_COUNT > 0 )); then
   echo "✖ Some tests failed. Exiting with error."
+  echo "########################################################################################"
   exit 1
 else
   echo "✔ All tests passed."
+  echo "########################################################################################"
   exit 0
 fi
