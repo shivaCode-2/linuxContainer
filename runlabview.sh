@@ -25,6 +25,8 @@ echo "##########################################################################
 echo $OUTPUT_MASSCOMPILE
 echo "########################################################################################"
 
+printf "\n\n\n\n"
+
 echo -e "\n\nRunning LabVIEWCLI VIAnalyzer with the following parameters:"
 echo "ConfigPath: $CONFIG_FILE"
 echo "ReportPath: $REPORT_PATH"
