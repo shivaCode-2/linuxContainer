@@ -72,3 +72,8 @@ else
   echo "########################################################################################"
   exit 0
 fi
+
+echo "Closing LabVIEW Gracefully..."
+OUTPUT=$(LabVIEWCLI -LogToConsole TRUE \
+-OperationName CloseLabVIEW \
+-LabVIEWPath $LABVIEW_PATH)
