@@ -66,9 +66,12 @@ echo "Number of failed tests: $FAILED_COUNT"
 if (( FAILED_COUNT > 0 )); then
   echo "✖ Some tests failed. Exiting with error."
   echo "########################################################################################"
-  exit 1
 else
   echo "✔ All tests passed."
   echo "########################################################################################"
-  exit 0
 fi
+echo "Closing LabVIEW Gracefully..."
+OUTPUT=$(LabVIEWCLI -LogToConsole TRUE \
+-OperationName CloseLabVIEW \
+-LabVIEWPath $LABVIEW_PATH)
+
