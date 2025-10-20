@@ -1,4 +1,4 @@
-name: VI Analyzer Tests
+name: Run LabVIEWCLI on Linux Container
 
 on:
   pull_request:
@@ -14,21 +14,21 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Authenticate to GitHub Container Registry
+      # Authenticate to Docker Hub
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.GHCR_UNAME }}
+          password: ${{ secrets.GHCR_PAT }}
 
-      - name: Pull Docker Image from GHCR
-        run: docker pull ghcr.io/shivacode-2/lv2025linux:latest
+      - name: Pull Docker Image from Docker Hub
+        run: docker pull ghcr.io/shivacode-2/labview:2025q3-linux-beta
 
-      - name: Run VI Analyzer Tests
+      - name: Run LabVIEWCLI Operations
         run: |
           docker run --rm \
             -v "${{ github.workspace }}:/workspace" \
-            ghcr.io/shivacode-2/lv2025linux:latest \
+            ghcr.io/shivacode-2/labview:2025q3-linux-beta \
             bash -c "cd /workspace && chmod +x runlabview.sh && ./runlabview.sh"
 
