@@ -23,12 +23,12 @@ jobs:
           password: ${{ secrets.GHCR_PAT }}
 
       - name: Pull Docker Image from Docker Hub
-        run: docker pull nationalinstruments/labview:2025q3-linux
+        run: docker pull nationalinstruments/labview:latest-linux
 
       - name: Run LabVIEWCLI Operations
         run: |
           docker run --rm \
             -v "${{ github.workspace }}:/workspace" \
-            nationalinstruments/labview:2025q3-linux \
+            nationalinstruments/labview:latest-linux \
             bash -c "cd /workspace && chmod +x runlabview.sh && ./runlabview.sh"
 
