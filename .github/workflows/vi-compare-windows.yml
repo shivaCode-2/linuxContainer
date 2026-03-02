@@ -1,0 +1,141 @@
+name: VI Compare (Windows)
+
+# Prerequisite (one-time, requires admin):
+#   Go to Settings → Pages → Build and deployment → Source → GitHub Actions → Save.
+# Without this the "Deploy to GitHub Pages" step will fail with a clear error message.
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  run-vi-compare-windows:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      pages: write
+      id-token: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compute Changed Files and Prepare Base Versions
+        shell: pwsh
+        run: |
+          # Write tab-separated STATUS<TAB>FILE lines for changed .vi files.
+          # STATUS: A=added, D=deleted, M=modified.
+          $lines = git diff --name-status "origin/${{ github.base_ref }}...HEAD" |
+            Where-Object { $_ -match '\.vi$' }
+
+          Write-Host "Changed VI files:"
+          $lines | ForEach-Object { Write-Host "  $_" }
+
+          # Create a git worktree for the base branch so binary .vi files can be
+          # compared safely without manual extraction.
+          git worktree add "${{ github.workspace }}\vi-base" "origin/${{ github.base_ref }}"
+
+          # Write the list to a file so the container can read it without
+          # multiline environment-variable encoding issues.
+          if ($null -eq $lines) {
+            New-Item -ItemType File -Path "${{ github.workspace }}\changed-files.txt" -Force | Out-Null
+          } else {
+            $lines | Out-File -FilePath "${{ github.workspace }}\changed-files.txt" `
+              -Encoding utf8NoBOM
+          }
+
+      - name: Pull Docker Image from Docker Hub
+        run: docker pull nationalinstruments/labview:2026q1-windows
+
+      - name: Run CreateComparisonReport on Changed Files
+        shell: pwsh
+        run: |
+          docker run --rm `
+            -v "${{ github.workspace }}:C:\workspace" `
+            nationalinstruments/labview:2026q1-windows `
+            powershell -File C:\workspace\VICompareTooling\runvicompare.ps1
+
+      - name: Upload reports to GitHub Pages
+        id: upload-pages
+        if: always() && hashFiles('vi-compare-reports/*.html') != ''
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: vi-compare-reports/
+
+      - name: Deploy to GitHub Pages
+        id: deploy-pages
+        if: always() && steps.upload-pages.outcome == 'success'
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+
+      - name: Check GitHub Pages setup
+        if: always() && steps.deploy-pages.outcome == 'failure'
+        shell: pwsh
+        run: |
+          Write-Host ""
+          Write-Host "=========================================================="
+          Write-Host " GitHub Pages deployment failed — admin setup required"
+          Write-Host "=========================================================="
+          Write-Host ""
+          Write-Host " A repo admin must complete the following one-time setup:"
+          Write-Host ""
+          Write-Host "   1. Go to https://github.com/${{ github.repository }}/settings/pages"
+          Write-Host "   2. Under 'Build and deployment', set Source to 'GitHub Actions'"
+          Write-Host "   3. Click Save"
+          Write-Host ""
+          Write-Host " This setting requires admin access to the repository."
+          Write-Host "=========================================================="
+          Write-Host "::error::GitHub Pages is not configured. A repo admin must go to Settings -> Pages -> Source -> GitHub Actions and click Save. See the step log for details."
+          exit 1
+
+      - name: Post PR Comment with Report Links
+        if: always() && steps.deploy-pages.outcome == 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const changedFilesPath = path.join(process.env.GITHUB_WORKSPACE, 'changed-files.txt');
+            if (!fs.existsSync(changedFilesPath)) return;
+
+            // Each line is: STATUS\tpath/to/file.vi
+            // STATUS: A=added, D=deleted, M=modified
+            const entries = fs.readFileSync(changedFilesPath, 'utf8')
+              .split('\n')
+              .map(l => l.trim())
+              .filter(l => l.includes('\t') && l.endsWith('.vi'))
+              .map(l => {
+                const [status, file] = l.split('\t', 2);
+                return { status: status.trim(), file: file.trim() };
+              });
+
+            if (entries.length === 0) return;
+
+            const pagesUrl = '${{ steps.deploy-pages.outputs.page_url }}';
+            const base = pagesUrl.endsWith('/') ? pagesUrl : pagesUrl + '/';
+
+            let body = '### VI Comparison Reports (Windows)\n\n';
+            body += '| VI File | Change | Report |\n|---------|--------|--------|\n';
+            for (const { status, file } of entries) {
+              const baseName = path.basename(file, '.vi');
+              const isModified = status === 'M';
+              const reportFile = isModified
+                ? `${baseName}-diff-report.html`
+                : `${baseName}-print-report.html`;
+              const changeLabel = status === 'A' ? 'Added'
+                                : status === 'D' ? 'Deleted'
+                                : 'Modified';
+              body += `| \`${file}\` | ${changeLabel} | [${reportFile}](${base}${encodeURIComponent(reportFile)}) |\n`;
+            }
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              body
+            });
