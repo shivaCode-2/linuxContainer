@@ -1,8 +1,10 @@
 #!/bin/bash
-CONFIG_FILE='/workspace/Test-VIs/viaPassCase.viancfg'
-LABVIEW_PATH='/usr/local/natinst/LabVIEW-2025-64/labviewprofull'
+CONFIG_FILE='/workspace/Test-VIs/VIAnalyzerCfgFile.viancfg'
 REPORT_PATH='/usr/local/natinst/ContainerExamples/Results.txt'
 MASSCOMPILE_DIR='/workspace/Test-VIs'
+LABVIEW_PATH='/usr/local/natinst/LabVIEW-2025-64/labviewprofull'
+
+# adding a comment  
 
 # Verify that the configuration file exists.
 if [ ! -f "$CONFIG_FILE" ]; then
@@ -10,6 +12,8 @@ if [ ! -f "$CONFIG_FILE" ]; then
   exit 1
 fi
 
+mkdir -p "/tmp/natinst"
+echo "1" > /tmp/natinst/LVContainer.txt
 
 echo "Running LabVIEWCLI MassCompile with following parameters:"
 echo "DirectorytoCompile: $MASSCOMPILE_DIR"
